@@ -1,9 +1,9 @@
-name: Run ArzDigital Scraper
+name: Run Crypto & Forex Scrapers
 
 on:
   schedule:
-    - cron: "*/2 * * * *"   # اجرای خودکار هر 2 دقیقه
-  workflow_dispatch:        # امکان اجرای دستی
+    - cron: "*/1 * * * *"   # اجرای خودکار هر 2 دقیقه
+  workflow_dispatch:        # اجرا دستی
 
 jobs:
   run-script:
@@ -23,8 +23,11 @@ jobs:
         pip install requests
         pip install beautifulsoup4
 
-    - name: Run scraper
+    - name: Run Crypto Scraper
       run: python index.py
+
+    - name: Run Forex Scraper
+      run: python stoke_script.py
 
     - name: Commit updated files
       run: |
@@ -32,7 +35,8 @@ jobs:
         git config --local user.name "GitHub Actions"
 
         git add arzdigital_data.txt || true
+        git add qoute_price.txt || true
 
-        git commit -m "Auto-update scraped data" || echo "No changes to commit"
+        git commit -m "Auto-update crypto & forex data" || echo "No changes to commit"
 
         git push
