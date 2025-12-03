@@ -2,8 +2,8 @@ name: Run Crypto & Forex Scrapers
 
 on:
   schedule:
-    - cron: "*/2 * * * *"   # اجرای خودکار هر 2 دقیقه
-  workflow_dispatch:        # اجرا دستی
+    - cron: "*/2 * * * *"   # هر 2 دقیقه
+  workflow_dispatch:        # اجرای دستی
 
 jobs:
   run-script:
@@ -20,13 +20,18 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install requests
-        pip install beautifulsoup4
+        sudo apt update
+        sudo apt install -y chromium-browser chromium-chromedriver
+        pip install selenium requests beautifulsoup4
 
     - name: Run Crypto Scraper
+      env:
+        DISPLAY: :99
       run: python index.py
 
     - name: Run Forex Scraper
+      env:
+        DISPLAY: :99
       run: python stoke_script.py
 
     - name: Commit updated files
@@ -38,5 +43,4 @@ jobs:
         git add qoute_price.txt || true
 
         git commit -m "Auto-update crypto & forex data" || echo "No changes to commit"
-
         git push
