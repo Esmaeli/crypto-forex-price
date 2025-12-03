@@ -2,7 +2,7 @@ name: Run Crypto & Forex Scrapers
 
 on:
   schedule:
-    - cron: "*/1 * * * *"   # اجرای خودکار هر 2 دقیقه
+    - cron: "*/2 * * * *"   # اجرای خودکار هر 2 دقیقه
   workflow_dispatch:        # اجرا دستی
 
 jobs:
